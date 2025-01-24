@@ -1,9 +1,10 @@
 .box-cabecera {
-  background-color: darkgreen;
-  padding: 1rem;
+  background-color: #872341;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.box-busca .container-linea {
+.box-buscador .container-linea {
   display: flex;
   justify-content: center; /* Centrar horizontalmente */
   align-items: center; /* Centrar verticalmente */
@@ -29,6 +30,33 @@
   height: 6rem;
   width: 6rem;
 }
+.link-icon {
+  font-weight: 500;
+  text-decoration: none;
+  color: white;
+  position: relative;
+}
+.link-icon i,
+.link-icon p {
+  position: absolute;
+  width: 3.8rem;
+  text-align: center;
+  left: 0;
+}
+.link-icon i {
+  bottom: -1rem;
+  font-size: 3rem;
+}
+.link-icon p {
+  top: 1.5rem;
+  transition: transform 1.3s ease-in-out; /* Transición para el hover */
+}
+.link-icon:hover {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: font-size 0.2s ease-in-out;
+}
 
 .box-icon {
   display: block;
@@ -37,15 +65,12 @@
   align-items: center;
   max-width: 8rem;
   z-index: 1;
-
+  background-color: #be3144;
 }
 .box-icon p {
   margin: 0;
   font-size: 1.7rem;
   padding: 0 0.5rem;
-}
-.box-icon:hover {
-  transform: scale(1.05);
 }
 
 .icon {
@@ -53,34 +78,36 @@
   color: white;
 }
 .boton-busqueda {
-  display: flex;
-  align-items: center;
+  width: 3.5rem;
+  font-size: 1.4rem;
+  transition: all 0.1s ease-in-out;
 }
-.boton-busqueda .icon {
-  font-size: 2rem;
+.boton-busqueda:hover {
+  transform: scale(1.06);
 }
-.boton-busqueda .icon {
-  color: darkgreen;
-}
-.boton-busqueda .icon:hover {
-  color: white;
+.boton-busqueda:active {
+  transform: translateY(
+    1px
+  ); /* Aumenta el tamaño vertical y se mueve hacia abajo */
 }
 
 .navbar {
   padding: 0.2rem;
   display: block;
-  align-items: center;
-  justify-content: center;
   border-radius: 0.3rem;
+  flex-grow: 1;
+  height: 3.5rem;
+  max-width: 32rem;
 }
 
 .formulario-busqueda {
   height: 100%;
-  width: 30rem;
+  gap: 0.2rem;
 }
-.input-search{
-    font-size: 2rem;
+.form-control:focus {
+  box-shadow: 0 0 0.25rem #be3144;
 }
+
 .box-input-sugerencias {
   position: relative;
   width: 100%;
@@ -91,33 +118,34 @@
 
 .lista-sugerencia {
   position: absolute;
-  background-color: #f2f2f2;
+  background-color: white;
   list-style-type: none;
   width: 100%;
-  top: 100%;
-  right: 0.2rem;
+  top: 108%;
   padding: 0;
   margin: 0;
   z-index: 4;
+  border-radius: 4px;
 }
 .lista-sugerencia li {
   cursor: pointer;
+  padding: 0 10px;
 }
 .lista-sugerencia li:hover {
-  background-color: darkgreen;
+  background-color: #872341;
   color: white;
 }
 .lista-sugerencia li:hover i {
   color: white;
 }
-.input-search::-webkit-search-cancel-button {
-    appearance: none;
-
+/* .input-search::-webkit-search-cancel-button {
+  appearance: none;
+} */
+.carrito {
+  /*   position: relative;
+ */
 }
-.carrito{
-  position: relative;
-}
-.box-icon .badge{
+.box-icon .badge {
   position: absolute;
   background-color: white;
   top: 7rem;
@@ -127,38 +155,41 @@
   border-radius: 1rem;
 }
 
-
-.datos-compra{
+.datos-compra {
   position: absolute;
   background-color: white;
   border: 0.1rem solid;
   color: black;
-  right: 3rem;
+  right: 2rem;
   z-index: 1;
-  max-width: 30rem;
+  top: 7rem;
+  width: 17rem;
   display: none;
+  pointer-events: auto;
+}
+.datos-compra div {
+  text-align: end;
+  padding: 0 5px;
 }
 
-.datos-compra .cabecera-carrito{
-  display: flex;
-  background-color: #712CF9;
-  padding: 0.4rem;
-
+.datos-compra .cabecera-carrito {
+  background-color: #872341;
+  color: white;
 }
-.datos-compra .cabecera-carrito span{
+.datos-compra .cabecera-carrito span {
   border-radius: 0.8rem;
   font-size: 2rem;
   color: white;
   padding: 0 0.3rem;
 }
-.datos-compra .cuerpo-carrito{
-  padding: 0.5rem;
+.datos-compra .cuerpo-carrito {
+  gap: 1rem;
 }
-.datos-compra .cuerpo-carrito .row{
+.datos-compra .cuerpo-carrito .row {
   border-bottom: 0.1rem solid grey;
   margin: 10px auto;
   width: 90%;
 }
-.datos-compra .cuerpo-carrito .col-3{
-  padding:  0.5rem 0;
+.datos-compra .cuerpo-carrito .col-3 {
+  padding: 0.5rem 0;
 }

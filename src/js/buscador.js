@@ -16,6 +16,9 @@ function init() {
       console.log("Petición realizada");
     },
   });
+  if ($(".input-search").val() === "") {
+    $(".lista-sugerencia").empty();
+  }
 }
 
 function operaciones(json) {
@@ -26,6 +29,64 @@ function operaciones(json) {
   añadirAlCarrito();
   ConstructorDesplegableCarrito()
   ActivadorPopovers();
+  /* prueba */
+  /*   mostrarProductosCarrusel(json)
+   */
+  crearCarrusel("#containerCarousel", "carruselPrincipal", json.carruselPrincipal)
+}
+
+
+
+function crearCarrusel(container, id, data) {
+  let itemsComponents = "";
+  $.each(data, (index, item) => {
+    itemsComponents += `
+    <div class="carousel-item ${index === 0 ? 'active' : ''}">
+        <img
+          src="${item.imagen}"
+          class="d-block w-100"
+          alt=""
+        />
+        <div class="carousel-caption d-none  d-md-block">
+          <h2 class="title-importants">${item.captionTitulo}</h2 >
+          <p>
+            ${item.captionTexto}
+          </p>
+        </div>
+      </div>
+      `
+  })
+
+  let newComponentCarrusel = `
+    <div
+          id="${id}"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            ${itemsComponents}
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#${id}"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#${id}"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+    `
+  $(container).html(newComponentCarrusel);
 }
 
 function cardsPrincipales(json) {
@@ -41,35 +102,49 @@ function cardsPrincipales(json) {
     $("#box-card-principales").append(newElem);
   });
 }
+function mostrarProductosCarrusel(json) {
+  const jProductos = json.productos;
+  console.log("datos por Carrusel imagen", jProductos[0].imagen);
 
+
+  let carrusel = $("#carousel-products .carousel-inner")
+
+  $.each(jProductos, (index, elem) => {
+    let newElem = $(`
+      <div class="carousel-item ${index === 0 ? 'active' : ''}">
+        <img src="${elem.imagen}" class="card-img-top" alt="...">
+      </div>
+  `)
+    console.log("datos por Carrusel", carrusel);
+    carrusel.append(newElem)
+
+  })
+}
 function mostrarDatosProductos(json) {
   /* Variables */
   const jProductos = json.productos;
-  let count = 0;
-
   /* Bucle constructor */
   $.each(jProductos, (index, elem) => {
-    if (count < 3) {
-      let newElem = $(`
-        <div class="col columna">
-              <div class="card h-100 btn btn-dark">
+
+    let newElem = $(`
+        <div class=" columna">
+              <div class="card btn btn-light">
                 <div class="imagen ">
-                  <img src="${elem.imagen}" class="card-img-top" alt="...">
+                  <img src="${elem.imagen}"  alt="...">
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">${elem.nombre}</h5>
                   <p class="card-descripcion"><b>Descripcion: </b> ${elem.descripcion}.</p>
                 </div>
                 <div class="card-footer">
-                <p class="card-precio"> ${elem.precio}</p>
+                <span class="card-precio"> ${elem.precio} €</span>
 
                   <buton class="btn btn-dark comprar">Comprar</buton>
                 </div>
             </div>
       </div>`);
-      $(".box-productos-filas").append(newElem);
-      count++;
-    }
+    $(".box-products").append(newElem);
+
   });
 }
 
@@ -79,6 +154,7 @@ function MostrarCuadroSugerencias(json) {
   let input = $(".input-search");
   let listaSugerencia = $(".lista-sugerencia");
   /* Al teclear en el input*/
+
   input.keyup(function () {
     let busquedaCoincidente = $(this).val().toLowerCase();
     let count = 0;
@@ -107,6 +183,12 @@ function MostrarCuadroSugerencias(json) {
     console.log(nombre);
     input.val(nombre);
     listaSugerencia.empty();
+  });
+  /* Al borrar el input usando el botón de cancelar del navegador */
+  input.on('input', function () {
+    if ($(this).val() === '') {
+      listaSugerencia.empty();
+    }
   });
 }
 
@@ -173,7 +255,7 @@ let carrito = [];
 
 function añadirAlCarrito() {
 
-  $("#box-card-filtrado, .box-productos-filas").one("click",".comprar",function () {
+  $("#box-card-filtrado, .box-products").one("click", ".comprar", function () {
     /* Encontrar la card mas cercana */
     const card = $(this).closest(".card");
 
@@ -188,16 +270,16 @@ function añadirAlCarrito() {
     if (productoExistente) {
       productoExistente.cantidad += 1;
     } else {
-    /* Objeto para cada producto */
-    const producto = {
-      nombre: nombre,
-      descripcion: descripcion,
-      precio: precio,
-      cantidad: 1
-    };
-        carrito.push(producto);      
-  }
-   
+      /* Objeto para cada producto */
+      const producto = {
+        nombre: nombre,
+        descripcion: descripcion,
+        precio: precio,
+        cantidad: 1
+      };
+      carrito.push(producto);
+    }
+
     /* Muestro en consola los productos */
     console.log(carrito);
     /* Agregar producto al carrito */
@@ -206,39 +288,35 @@ function añadirAlCarrito() {
 
 function ConstructorDesplegableCarrito() {
   añadirAlCarrito()
-  $(".datos-compra").show()
 
-  $("#carrito").click(function() {
+  $("#carrito").click(function () {
     console.log("clike");
+    $(".datos-compra").show()
+    if (carrito.length === 0) {
+      $("#total").append(0, " €");
 
-      $(".cuerpo-carrito").html(""); // Limpiar los elementos existentes antes de agregar nuevos
-
-      carrito.forEach(function(producto) {
-        console.log("datos:"+producto.nombre);
+    }
+    carrito.forEach(function (producto) {
+      console.log("datos:" + producto.nombre);
 
       let newElem = $(`
       <div class="row">
         <div class="col-3 " id="cantidad">${producto.cantidad}</div>
         <div class="col-3 " id="nombre">${producto.nombre}</div>
         <div class="col-3" id="precio">${producto.precio}</div>
-        <div class="col-3" id="borrado"><button class="borrar">Borrar</button></div>
-      </div>
-      <div class="row">
-        <div class="col-3 " id="cantidad">${producto.cantidad}</div>
-        
+        <div class="col-3" id="borrado"><button class="borrar">Borrar</button></div>      
       </div>
       `);
       $(".cuerpo-carrito").append(newElem);
       total += producto.precio; // Sumar el precio de cada producto al total
 
     });
-    $("#total").text(total); // Insertar el total en el elemento con el ID "total"
 
   });
-  $("#carrito").blur(function() {
+  $("#carrito").blur(function () {
     $(".datos-compra").hide()
   })
-  $(".borrar").click(function(){
+  $(".borrar").click(function () {
     $(".datos-compra").hide()
   })
 }
@@ -271,15 +349,15 @@ function FormularioRegistro() {
     console.log("Email:", cliente.email);
     console.log("Contraseña:", cliente.password);
 
-// Aquí puedes enviar el formulario o realizar alguna acción adicional
+    // Aquí puedes enviar el formulario o realizar alguna acción adicional
     alert(
       "\nMensaje informativo\n Estos son tus datos \n" +
       "\n*Usuario: " +
       cliente.nombreUsuario +
-        "\n*Email: " +
-        cliente.email +
-        "\n*Contraseña: " +
-        cliente.password
+      "\n*Email: " +
+      cliente.email +
+      "\n*Contraseña: " +
+      cliente.password
     );
 
     /* Restablecer datos */
@@ -288,7 +366,7 @@ function FormularioRegistro() {
     $("#InputPassword2").val("");
     $("#InputEmail1").val("");
 
-    
+
   });
 }
 

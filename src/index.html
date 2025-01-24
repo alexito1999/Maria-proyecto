@@ -31,112 +31,69 @@
       <!-- Contenedor -->
       <div class="container-fluid box-cabecera">
         <!-- Fila -->
-        <div class="row">
-          <!-- Columnas -->
-          <div class="col-3 box-buscador">
-            <a href="index.html" class="box-icon btn btn-success">
-              <i class="bi bi-house icon"></i>
-              <p>Inicio</p>
-            </a>
-            <div class="container-linea">
-              <div class="vertical-line"></div>
-            </div>
-            <div class="logo">
-              <img src="./images/logo1.jpg" class="rounded-circle" alt="" />
-            </div>
+        <!-- Columnas -->
+        <div class="box-buscador">
+          <a href="index.html" class="btn link-icon">
+            <i class="bi bi-house"></i>
+            <p>Inicio</p>
+          </a>
+          <div class="container-linea">
+            <div class="vertical-line"></div>
           </div>
-          <div class="col-6 box-buscador">
-            <nav class="navbar navbar-light bg-light">
-              <form action="" class="form-inline d-flex formulario-busqueda">
-                <div class="box-input-sugerencias">
-                  <input
-                    class="form-control mr-sm-2 input-search"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
-                  <ul class="lista-sugerencia"></ul>
-                </div>
-                <button
-                  class="btn btn-outline-success my-sm-0 boton-busqueda"
-                  type="submit"
-                >
-                  <div class="box-icon"><i class="bi bi-search icon"></i></div>
-                </button>
-              </form>
-            </nav>
+          <div class="logo">
+            <img src="./images/logo1.jpg" class="rounded-circle" alt="" />
           </div>
+        </div>
+        <div class="box-buscador">
+          <nav class="navbar navbar-light bg-light">
+            <form action="" class="d-flex formulario-busqueda">
+              <div class="box-input-sugerencias">
+                <input
+                  class="form-control mr-sm-2 input-search"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <ul class="lista-sugerencia"></ul>
+              </div>
+              <button
+                class="btn btn-outline-danger boton-busqueda"
+                type="submit"
+              >
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+          </nav>
+        </div>
 
-          <div class="col-3 box-buscador">
-            <a href="usuario.html" class="box-icon btn btn-success">
-              <i class="bi bi-person-circle icon"></i>
-              <p>Usuario</p>
-            </a>
-
-            <a class="btn btn-success" id="carrito">
-              <i class="bi bi-cart3 icon"></i>
+        <div class="box-buscador">
+          <a href="usuario.html" class="btn link-icon">
+            <i class="bi bi-person-circle"></i>
+            <p>Usuario</p>
+          </a>
+          <div class="container-carrito">
+            <a class="btn link-icon" id="carrito">
+              <i class="bi bi-cart3"></i>
               <p>Carrito</p>
               <span class="badge text-bg-dark"></span>
-              <div class="datos-compra card">
-                <div class="cabecera-carrito">
-                  <span>Cantidad</span>
-                  <span>Nombre</span>
-                  <span>Precio</span>
-                  <i class="bi bi-x-circle" role="button"></i>
-                </div>
-                <div class="cuerpo-carrito"></div>
-                <div class="footer-carrito">
-                  <div class="row">
-                    <div class="col-3" id="total"></div>
-                  </div>
-                </div>
-              </div>
             </a>
+            <div class="datos-compra">
+              <div class="cabecera-carrito">
+                <i class="bi bi-x-circle close" role="button"></i>
+              </div>
+              <div class="cuerpo-carrito"></div>
+              <div class="footer-carrito">
+                <div class="text-right" id="total"></div>
+              </div>
+            </div>
           </div>
-          <!--Fin Columnas -->
         </div>
+        <!--Fin Columnas -->
         <!-- Fin container -->
       </div>
     </header>
     <main>
-      <div class="container-fluid carrusel">
-        <div
-          id="carouselExampleAutoplaying"
-          class="carousel slide"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img
-                src="images/caballero-fondo.jpg"
-                class="d-block w-100"
-                alt=""
-              />
-            </div>
-            <div class="carousel-item">
-              <img src="images/atuendo.jpg" class="d-block w-100" alt="" />
-            </div>
-          </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleAutoplaying"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleAutoplaying"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
+      <div id="containerCarousel"></div>
 
       <section class="contenido-principal">
         <!-- CARDS DE EVENTOS -->
@@ -145,10 +102,41 @@
         <!-- FILTRADO DE PRODUCTOS -->
         <section id="box-card-filtrado"></section>
         <!-- PRODUCTOS -->
-        <section id="box-productos ">
-          <div
-            class="row row-cols-1 row-cols-md-3 g-4 box-productos-filas"
-          ></div>
+        <section id="container-products">
+          <!-- productos por carrito -->
+          <!-- <div id="carousel-products" class="carousel carousel-dark slice">
+            <div class="carousel-inner"></div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carousel-products"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carousel-products"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div> -->
+
+          <!-- productos normales -->
+          <h1 class="title-importants activo">
+            Tienda medieval <span>A&J</span> medieval
+          </h1>
+          <div class="row row-cols-1 row-cols-md-5 box-products"></div>
         </section>
       </section>
     </main>

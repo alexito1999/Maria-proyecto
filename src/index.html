@@ -21,22 +21,26 @@
       crossorigin="anonymous"
     ></script>
     <!-- ARCHIVOS PROPIOS -->
-    <script src="./js/buscador.js"></script>
+    <script type="module" src="./js/buscador.js"></script>
     <link rel="stylesheet" href="./css/style.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
   </head>
 
   <body>
     <!-- Cabecera -->
-    <header>
+    <header id="header">
       <!-- Contenedor -->
       <div class="container-fluid box-cabecera">
         <!-- Fila -->
         <!-- Columnas -->
         <div class="box-buscador">
-          <a href="index.html" class="btn link-icon">
-            <i class="bi bi-house"></i>
-            <p>Inicio</p>
-          </a>
+          <div class="box-icon-navigator">
+            <a href="index.html" class="btn">
+              <i class="bi bi-house"></i>
+              <p>Inicio</p>
+            </a>
+          </div>
           <div class="container-linea">
             <div class="vertical-line"></div>
           </div>
@@ -67,23 +71,38 @@
         </div>
 
         <div class="box-buscador">
-          <a href="usuario.html" class="btn link-icon">
-            <i class="bi bi-person-circle"></i>
-            <p>Usuario</p>
-          </a>
-          <div class="container-carrito">
-            <a class="btn link-icon" id="carrito">
-              <i class="bi bi-cart3"></i>
-              <p>Carrito</p>
-              <span class="badge text-bg-dark"></span>
+          <div class="box-icon-navigator">
+            <a href="usuario.html" class="btn">
+              <i class="bi bi-person-circle"></i>
+              <p>Usuario</p>
             </a>
+          </div>
+
+          <div class="container-carrito">
+            <div class="box-icon-navigator">
+              <a class="btn" id="carrito">
+                <i class="bi bi-cart3"></i>
+                <p>Carrito</p>
+              </a>
+              <span
+                class="position-absolute translate-middle badge rounded-pill bg-danger"
+              >
+                0
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </div>
             <div class="datos-compra">
-              <div class="cabecera-carrito">
+              <div class="cabecera-carrito d-flex justify-content-between">
+                <h1>Carrito de compra</h1>
                 <i class="bi bi-x-circle close" role="button"></i>
               </div>
               <div class="cuerpo-carrito"></div>
               <div class="footer-carrito">
-                <div class="text-right" id="total"></div>
+                <div class="totales">
+                  <span>Total: </span>
+                  <span id="total"></span>
+                </div>
+                <button class="borrar btn">Realizar Pedido</button>
               </div>
             </div>
           </div>
@@ -93,6 +112,7 @@
       </div>
     </header>
     <main>
+      <div class="overlay"></div>
       <div id="containerCarousel"></div>
 
       <section class="contenido-principal">
@@ -131,9 +151,8 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div> -->
-
           <!-- productos normales -->
-          <h1 class="title-importants activo">
+          <h1 class="title-importants">
             Tienda medieval <span>A&J</span> medieval
           </h1>
           <div class="row row-cols-1 row-cols-md-5 box-products"></div>

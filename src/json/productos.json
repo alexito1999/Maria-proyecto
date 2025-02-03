@@ -1,6 +1,7 @@
 {
   "productos": [
     {
+      "id": 1,
       "nombre": "Espada medieval",
       "precio": 100,
       "categoria": "arma",
@@ -8,6 +9,7 @@
       "imagen": "images/productos/espadamedi.webp"
     },
     {
+      "id": 2,
       "nombre": "Hacha de batalla",
       "precio": 50,
       "categoria": "arma",
@@ -15,6 +17,7 @@
       "imagen": "images/productos/hacha.jpeg"
     },
     {
+      "id": 3,
       "nombre": "Maza",
       "precio": 75,
       "categoria": "arma",
@@ -22,6 +25,7 @@
       "imagen": "images/productos/maza.jpeg"
     },
     {
+      "id": 4,
       "nombre": "Arco largo",
       "precio": 100,
       "categoria": "arma",
@@ -29,6 +33,7 @@
       "imagen": "images/productos/arco largo.jpeg"
     },
     {
+      "id": 5,
       "nombre": "Ballesta",
       "precio": 150,
       "categoria": "arma",
@@ -36,6 +41,7 @@
       "imagen": "images/productos/ballesta.jpeg"
     },
     {
+      "id": 6,
       "nombre": "Casco medieval",
       "precio": 50,
       "categoria": "armadura",
@@ -43,6 +49,7 @@
       "imagen": "images/productos/casco.jpg"
     },
     {
+      "id": 7,
       "nombre": "Armadura medieval",
       "precio": 200,
       "categoria": "armadura",
@@ -50,6 +57,7 @@
       "imagen": "images/productos/armadura.avif"
     },
     {
+      "id": 8,
       "nombre": "Lanza medieval",
       "precio": 30,
       "categoria": "arma",

@@ -1,42 +1,74 @@
+import Carrito from './Carrito.js';
+import Producto from './Producto.js'
+/* import interObserver from './intersectionObserver.js'
+ */
 $(document).ready(() => init());
 
-function init() {
-  $.ajax({
-    url: "json/productos.json",
-    //data : { id : 2 },
-    /* type: "GET", */
-    dataType: "json",
-    success: function (json) {
-      operaciones(json);
-    },
-    error: function (xhr, status) {
-      console.log("Disculpe, existió un problema");
-    },
-    complete: function (xhr, status) {
-      console.log("Petición realizada");
-    },
-  });
-  if ($(".input-search").val() === "") {
-    $(".lista-sugerencia").empty();
+async function init() {
+  const datos = await datosJson(); // Espera a que los datos se carguen antes de continuar
+  if (datos) {
+    operacionesJson(datos); // Procesa los datos
+  } else {
+    console.log("No se pudieron cargar los datos.");
+  }
+  añadirAlCarrito(); // Ahora que los productos están en el DOM, activamos el evento
+/*   seguimiendoCabecera();
+ */  FormularioRegistro();
+  ConstructorDesplegableCarrito();
+}
+
+async function datosJson() {
+  try {
+    const response = await $.ajax({
+      url: "json/productos.json",
+      dataType: "json",
+    });
+    console.log("Datos cargados:", response);
+    return response;
+  } catch (error) {
+    console.log("Disculpe, existió un problema:", error);
+    return null;
   }
 }
 
-function operaciones(json) {
+function operacionesJson(json) {
   mostrarDatosProductos(json);
   cardsPrincipales(json);
   buscarProductos(json);
-  FormularioRegistro();
-  añadirAlCarrito();
-  ConstructorDesplegableCarrito()
-  ActivadorPopovers();
-  /* prueba */
-  /*   mostrarProductosCarrusel(json)
-   */
   crearCarrusel("#containerCarousel", "carruselPrincipal", json.carruselPrincipal)
 }
 
 
+function seguimiendoCabecera() {
 
+  // Inicializar ScrollMagic
+  var controller = new ScrollMagic.Controller();
+  // create a scene
+
+  // Crear escena
+  var scene = new ScrollMagic.Scene({
+    triggerElement: '#header',
+    triggerHook: 0
+  })
+    .setPin('#header')
+    .addTo(controller);
+
+  // Mostrar u ocultar la cabecera según la dirección del desplazamiento
+  var lastScrollTop = 0;
+  window.addEventListener('scroll', function () {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var header = document.getElementById('header');
+
+    if (scrollTop > lastScrollTop) {
+
+      header.style.top = `-${header.offsetHeight}px`; // Ocultar la cabecera
+    } else {
+      header.style.top = '0';
+    }
+
+    lastScrollTop = scrollTop;
+  });
+}
 function crearCarrusel(container, id, data) {
   let itemsComponents = "";
   $.each(data, (index, item) => {
@@ -127,8 +159,8 @@ function mostrarDatosProductos(json) {
   $.each(jProductos, (index, elem) => {
 
     let newElem = $(`
-        <div class=" columna">
-              <div class="card btn btn-light">
+        <div class="product columna" ">
+              <div class="card btn btn-light" data-id="${elem.id}">
                 <div class="imagen ">
                   <img src="${elem.imagen}"  alt="...">
                 </div>
@@ -251,76 +283,105 @@ function buscarProductos(json) {
   });
 }
 /* Array de los productos de las compras */
-let carrito = [];
+const carrito = new Carrito()
 
 function añadirAlCarrito() {
-
-  $("#box-card-filtrado, .box-products").one("click", ".comprar", function () {
+  //container-products
+  $(".box-products").on("click", ".product .card", function () {
     /* Encontrar la card mas cercana */
     const card = $(this).closest(".card");
+    console.log("sdsasd")
 
     /* variables de los datos del producto */
+    const id = card.data("id");
     const nombre = card.find(".card-title").text();
     const descripcion = card.find(".card-descripcion").text();
     const precio = card.find(".card-precio").text();
 
-    const productoExistente = carrito.find(
-      (producto) => producto.nombre === nombre
-    );
-    if (productoExistente) {
-      productoExistente.cantidad += 1;
-    } else {
-      /* Objeto para cada producto */
-      const producto = {
-        nombre: nombre,
-        descripcion: descripcion,
-        precio: precio,
-        cantidad: 1
-      };
-      carrito.push(producto);
-    }
+    /* Agregar producto al carrito */
+    const producto = new Producto(id, nombre, descripcion, precio);
+    carrito.añadirProducto(producto);
 
     /* Muestro en consola los productos */
     console.log(carrito);
-    /* Agregar producto al carrito */
+    $(".container-carrito .badge").text(carrito.contarProductos())
+    actualizarCarrito()
+
   });
+}
+
+
+function actualizarCarrito() {
+
+  $(".cuerpo-carrito").empty();
+  $("#total").text(""); // Limpia el total previo
+
+  if (carrito.productos.length === 0) {
+    const newElem = $(`<i class="bi bi-cart-x carroVacio"></i>
+        <h1>La cesta de compras esta vacia</h1>`)
+    $(".cuerpo-carrito").append(newElem)
+    $(".footer-carrito button").css("display", "none")
+
+  } else {
+    carrito.productos.forEach(function (producto) {
+
+      const newElem = $(`
+        <div class="line" data-id="${producto.id}">
+          <span class="col-2" id="cantidad">${producto.cantidad}</span>
+          <span class="col-6" id="nombre">${producto.nombre}</span>
+          <span class="col-2"  id="precio">${producto.precio}</span>
+          <button class="col-2 borrar"><i class="bi bi-trash"></i></button>
+        </div>
+        `);
+      $(".cuerpo-carrito").append(newElem);
+    });
+
+    $("#total").text(`${carrito.calcularTotal()} €`); // Mostrar el total
+    $(".footer-carrito button").css("display", "block")
+  }
+
+
 }
 
 function ConstructorDesplegableCarrito() {
-  añadirAlCarrito()
+  eliminarLineaProducto()
 
+  /* Eventos al clicar al icono carrito */
+  //Abro el deplegable
   $("#carrito").click(function () {
-    console.log("clike");
-    $(".datos-compra").show()
-    if (carrito.length === 0) {
-      $("#total").append(0, " €");
+    let carrito = $(".datos-compra");
+    let rightValue = parseInt(carrito.css("right")); // Convierte a número
+    let isHidden = rightValue < 0; // Verifica si está oculto
 
-    }
-    carrito.forEach(function (producto) {
-      console.log("datos:" + producto.nombre);
-
-      let newElem = $(`
-      <div class="row">
-        <div class="col-3 " id="cantidad">${producto.cantidad}</div>
-        <div class="col-3 " id="nombre">${producto.nombre}</div>
-        <div class="col-3" id="precio">${producto.precio}</div>
-        <div class="col-3" id="borrado"><button class="borrar">Borrar</button></div>      
-      </div>
-      `);
-      $(".cuerpo-carrito").append(newElem);
-      total += producto.precio; // Sumar el precio de cada producto al total
-
-    });
+    carrito.animate({ right: isHidden ? '0' : '40rem' });
+    actualizarCarrito();
 
   });
-  $("#carrito").blur(function () {
-    $(".datos-compra").hide()
-  })
-  $(".borrar").click(function () {
-    $(".datos-compra").hide()
-  })
+
+  //Cierro el desplegable
+  $(".close").click(function () {
+    $(".datos-compra").animate({ right: '-40rem' });
+  });
 }
 
+function eliminarLineaProducto() {
+  $(".cuerpo-carrito").on("click", ".borrar", function () {
+    console.log("borrrar")
+    const productId = $(this).closest(".line").data("id"); // Obtiene el ID
+    console.log(productId)
+    carrito.eliminarProducto(productId)
+
+    actualizarBadge()
+    actualizarCarrito()
+  })
+
+}
+function actualizarBadge() {
+  console.log("actualizado");
+
+  const totalProductos = carrito.contarProductos();
+  $(".container-carrito .badge").text(totalProductos);
+}
 /* Base de datos de clientes */
 let userData = {
   cliente: [],

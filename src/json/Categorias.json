@@ -1,0 +1,14 @@
+[
+  {"id":1,
+  "nombre":"medieval"
+},
+  {"id":2,
+  "nombre":"nordico"
+},
+  {"id":3,
+  "nombre":"cruzadas"
+},
+{"id":4,
+  "nombre":"recreaciones"
+}
+]

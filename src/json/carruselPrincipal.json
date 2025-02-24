@@ -1,0 +1,14 @@
+[
+    {
+      "id": 1,
+      "imagen": "images/carruselPrincipal/atuendo.jpg",
+      "captionTitulo": "titulo q pondre mas tarde.",
+      "captionTexto": "Cosas q pondre mas tarde."
+    },
+    {
+      "id": 2,
+      "imagen": "images/carruselPrincipal/caballero-fondo.jpg",
+      "captionTitulo": "titulo q pondre mas tarde.",
+      "captionTexto": "Caballero sin caballo hace camino al andar."
+    }
+  ]

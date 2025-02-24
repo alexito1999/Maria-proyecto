@@ -1,100 +1,106 @@
-{
-  "productos": [
+ [
     {
       "id": 1,
       "nombre": "Espada medieval",
       "precio": 100,
-      "categoria": "arma",
+      "categoria": 1,
+      "tipo": "arma",
+
       "descripcion": "Una espada medieval de acero forjado con una hoja de 60 cm de largo.",
-      "imagen": "images/productos/espadamedi.webp"
+      "imagen": "images/productos/espadamedi-1.webp",
+      "imagenSecundaria": "images/productos/espadamedi-2.webp"
     },
     {
       "id": 2,
-      "nombre": "Hacha de batalla",
+      "nombre": "Hacha de batalla Nórdica",
       "precio": 50,
-      "categoria": "arma",
+      "categoria": 2,
+      "tipo": "arma",
       "descripcion": "Un arma de mano con una hoja de hierro de 30 cm de largo y un mango de madera de 60 cm de largo. Se usaba para golpear y cortar en la batalla.",
-      "imagen": "images/productos/hacha.jpeg"
+      "imagen": "images/productos/hacha-1.jpeg",
+      "imagenSecundaria": "images/productos/hacha-2.jpeg"
     },
     {
       "id": 3,
       "nombre": "Maza",
       "precio": 75,
-      "categoria": "arma",
+      "categoria": 1,
+      "tipo": "arma",
       "descripcion": "Un arma de mano con una cabeza de hierro con pinchos y un mango de madera de 60 cm de largo. Se usaba para golpear y aplastar en la batalla.",
-      "imagen": "images/productos/maza.jpeg"
+      "imagen": "images/productos/maza-1.jpeg",
+      "imagenSecundaria": "images/productos/maza-2.jpeg"
     },
     {
       "id": 4,
       "nombre": "Arco largo",
       "precio": 100,
-      "categoria": "arma",
+      "categoria": 1,
+      "tipo": "arma",
       "descripcion": "Un arco de madera de 1,8 m de largo con una cuerda de tendón de animales. Se usaba para disparar flechas a larga distancia.",
-      "imagen": "images/productos/arco largo.jpeg"
+      "imagen": "images/productos/arcoLargo.jpeg",
+      "imagenSecundaria": "images/productos/arcoLargo-2.jpeg"
     },
     {
       "id": 5,
       "nombre": "Ballesta",
       "precio": 150,
-      "categoria": "arma",
+      "categoria": 4,
+      "tipo": "arma",
       "descripcion": "Un arma de mano con un arco de acero y una cuerda de tendón de animales. Se usaba para disparar pernos de hierro a larga distancia.",
-      "imagen": "images/productos/ballesta.jpeg"
+      "imagen": "images/productos/ballesta-1.jpeg",
+      "imagenSecundaria": "images/productos/ballesta-2.jpeg"
     },
     {
       "id": 6,
       "nombre": "Casco medieval",
       "precio": 50,
-      "categoria": "armadura",
+      "categoria": 4,
+      "tipo": "recreacion",
       "descripcion": "Un casco medieval de acero con una visera que protege la cara.",
-      "imagen": "images/productos/casco.jpg"
+      "imagen": "images/productos/casco-1.jpg",
+      "imagenSecundaria": "images/productos/casco-2.jpg"
     },
     {
       "id": 7,
       "nombre": "Armadura medieval",
       "precio": 200,
-      "categoria": "armadura",
+      "categoria": 1,
+      "tipo": "armadura",
       "descripcion": "Una armadura medieval de acero que cubre todo el cuerpo.",
-      "imagen": "images/productos/armadura.avif"
+      "imagen": "images/productos/armadura-1.webp",
+      "imagenSecundaria": "images/productos/armadura-2.webp"
     },
     {
       "id": 8,
       "nombre": "Lanza medieval",
       "precio": 30,
-      "categoria": "arma",
+      "categoria": 1,
+      "tipo": "arma",
       "descripcion": "Una lanza medieval de madera con una punta de hierro.",
-      "imagen": "images/productos/lanza.jpeg"
-    }
+      "imagen": "images/productos/lanza-1.jpeg",
+      "imagenSecundaria": "images/productos/lanza-2.jpg"
+    },
+    {
+      "id": 9,
+      "nombre": "Escudo templario",
+      "precio": 110,
+      "categoria":3,
+      "tipo": "armadura",
+      "descripcion": "Un gran escudo templario a medida hecho a mano. Proporciona protección contra ataques directos.",
+      "imagen": "images/productos/escudoCaballero-1.webp",
+      "imagenSecundaria": "images/productos/escudoCaballero-2.webp"
 
-  ],
-  "cardsPrincipales": [
-    {
-      "id": 1,
-      "titulo": "Ofertas del dia",
-      "imagen": "images/descuento.png"
     },
     {
-      "id": 2,
-      "titulo": "Eventos",
-      "imagen": "images/calendario.png"
-    },
-    {
-      "id": 3,
-      "titulo": "Favoritos",
-      "imagen": "images/favorito.png"
-    }
-  ],
-  "carruselPrincipal":[
-    {
-      "id": 1,
-      "imagen": "images/carruselPrincipal/atuendo.jpg",
-      "captionTitulo": "titulo q pondre mas tarde.",
-      "captionTexto": "Cosas q pondre mas tarde."
-    },
-    {
-      "id": 2,
-      "imagen": "images/carruselPrincipal/caballero-fondo.jpg",
-      "captionTitulo": "titulo q pondre mas tarde.",
-      "captionTexto": "Caballero sin caballo hace camino al andar."
+      "id": 10,
+      "nombre": "Guantelete medieval gótico",
+      "precio": 185,
+      "categoria": 1,
+      "tipo": "armadura",
+      "descripcion": "Guanteles artesanales de estilo gótico hechas de acera, diseñados para proteger las manos durante el combate.",
+      "imagen": "images/productos/guanteletes-1.webp",
+      "imagenSecundaria": "images/productos/guanteletes-2.webp"
+
     }
   ]
-}
+

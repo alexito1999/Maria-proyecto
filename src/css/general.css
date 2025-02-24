@@ -1,21 +1,35 @@
-* {
+*,
+::after,
+::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", "Arial", "Helvetic";
 }
 
 html {
   font-size: 62.5%;
 }
 body {
+  /*   font-family: var(--font-family-base);
+ */
   font-size: 1.6rem;
+  overflow-x: hidden; /* Evita el desplazamiento horizontal */
 }
-header {
-  display: flex;
+section {
+  padding: 6rem 1rem;
 }
-main {
-  overflow-x: hidden;
+h1,
+h2,
+h3,
+h3,
+ul,
+p,
+a {
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
 }
 img {
   width: 100%;
@@ -29,6 +43,7 @@ img {
 
 ::-webkit-scrollbar-thumb {
   background: #cac2b5;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-track {
@@ -38,29 +53,48 @@ img {
 .title-importants {
   position: relative;
   display: inline-block;
-  padding-bottom: 1rem;
   font-family: serif;
-}
-section .title-importants::after {
-  background-color: #872341;
-  transform: scaleX(50%);
-}
-.carousel .title-importants::after {
-  background-color: #04bd7d;
-  width: 11rem;
+  text-transform: capitalize;
 }
 .title-importants::after {
   position: absolute;
   content: "";
-  height: 0.5rem;
+  height: 0.4rem;
   border-radius: 0.3rem;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition: width 1s ease-in-out;
+  left: 50%; /* Centrar el punto de inicio */
+  right: 50%; /* Centrar el punto de inicio */
+  width: 0; /* Inicialmente, la barra tiene un ancho de 0 */
+  bottom: -10px;
+  transform: translateX(-50%); /* Centrar la barra horizontalmente */
+  transition: width 1s ease-in-out, background-color 1s ease-in-out; /* Transición suave */
+  transform-origin: center;
 }
-.title-importants.activo:after {
+#box-card-filtrado .title-importants::after {
+  background-color: var(--secondary-color);
+}
+#container-products .title-importants::after {
+  background-color: var(--secondary-color);
+}
+
+.carousel .title-importants::after {
+  background-color: var(--titles-color);
+}
+
+.categorias .title-importants:hover::after {
   width: 100%;
+  background-color: var(--white-color);
+}
+
+.categorias .title-importants::after {
+  transition: width 0.2s ease-in-out;
+  height: 0.2rem;
+  bottom: -5px;
+  border-radius: 0;
+  background-color: var(--white-color);
+}
+
+.title-importants.activo:after {
+  width: 110%;
 }
 
 .left {
@@ -69,3 +103,18 @@ section .title-importants::after {
 .right {
   text-align: right;
 }
+.center {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .categorias .title-importants {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+} */

@@ -1,0 +1,12 @@
+:root {
+  --primary-color: #09122c;
+  --secondary-color: #a0153e;
+  --third-color: #be3144;
+  --titles-color: #04bd7d;
+  --white-color: #ffff;
+  --letters-color: #c0c0c0;
+  --font-family-base: "sans-serif, Arial, Helvetic";
+  --font-family-secondary: " Arial, Helvetic";
+
+  --font-size-base: 16px;
+}

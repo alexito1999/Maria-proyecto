@@ -1,11 +1,11 @@
 class Producto {
-    constructor(id, nombre, descripcion, precio) {
+    constructor(id, nombre, descripcion, precio, cantidad = 1) {
         this.id = id;
 
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precio = parseFloat(precio.replace(/[^\d.-]/g, '')); // Convierte el precio a número
-        this.cantidad = 1;
+        this.precio = precio
+        this.cantidad = cantidad;
     }
 
     incrementarCantidad() {

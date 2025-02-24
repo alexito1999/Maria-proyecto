@@ -7,8 +7,19 @@
     <meta name="theme-color" content="#09f" />
     <title>Proyecto Alex</title>
     <!-- BIBLIOTECA DE BOOSTRAP -->
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <!-- <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" /> -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
     <!-- FUENTES DE ICONOS -->
     <link
       rel="stylesheet"
@@ -21,7 +32,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- ARCHIVOS PROPIOS -->
-    <script type="module" src="./js/buscador.js"></script>
+    <script type="module" src="./js/index.js"></script>
     <link rel="stylesheet" href="./css/style.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
@@ -29,39 +40,25 @@
 
   <body>
     <!-- Cabecera -->
-    <header id="header">
-      <!-- Contenedor -->
-      <div class="container-fluid box-cabecera">
-        <!-- Fila -->
-        <!-- Columnas -->
-        <div class="box-buscador">
-          <div class="box-icon-navigator">
-            <a href="index.html" class="btn">
-              <i class="bi bi-house"></i>
-              <p>Inicio</p>
-            </a>
-          </div>
-          <div class="container-linea">
-            <div class="vertical-line"></div>
-          </div>
-          <div class="logo">
-            <img src="./images/logo1.jpg" class="rounded-circle" alt="" />
-          </div>
-        </div>
-        <div class="box-buscador">
+    <div class="container-fluid">
+      <div class="row container-buscador-ampliado">
+        <div class="flex-center col-md-8 buscador-ampliado">
           <nav class="navbar navbar-light bg-light">
-            <form action="" class="d-flex formulario-busqueda">
+            <form class="d-flex formulario-busqueda">
               <div class="box-input-sugerencias">
                 <input
-                  class="form-control mr-sm-2 input-search"
+                  id="input-search"
+                  autocomplete="off"
+                  class="form-control mr-sm-2"
                   type="search"
-                  placeholder="Search"
+                  placeholder="BUSCAR"
                   aria-label="Search"
                 />
                 <ul class="lista-sugerencia"></ul>
               </div>
               <button
-                class="btn btn-outline-danger boton-busqueda"
+                id="button-search"
+                class="btn btn-outline-danger boton"
                 type="submit"
               >
                 <i class="bi bi-search"></i>
@@ -69,132 +66,152 @@
             </form>
           </nav>
         </div>
-
-        <div class="box-buscador">
-          <div class="box-icon-navigator">
-            <a href="usuario.html" class="btn">
-              <i class="bi bi-person-circle"></i>
-              <p>Usuario</p>
-            </a>
+      </div>
+    </div>
+    <header id="header">
+      <!-- Contenedor -->
+      <div class="container-fluid box-cabecera">
+        <!-- Primera linea -->
+        <div class="row primera-linea">
+          <div class="flex-center col-6 col-md-4">
+            <button id="boton-apertura" class="btn boton" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
           </div>
-
-          <div class="container-carrito">
-            <div class="box-icon-navigator">
-              <a class="btn" id="carrito">
-                <i class="bi bi-cart3"></i>
-                <p>Carrito</p>
+          <div class="flex-center col-6 col-md-4">
+            <div class="logo center">
+              <a href="index.html"
+                ><img src="./images/logo2.png" class="rounded-circle" alt="" />
+                <p>A&J medieval</p>
               </a>
-              <span
-                class="position-absolute translate-middle badge rounded-pill bg-danger"
-              >
-                0
-                <span class="visually-hidden">unread messages</span>
-              </span>
             </div>
-            <div class="datos-compra">
-              <div class="cabecera-carrito d-flex justify-content-between">
-                <h1>Carrito de compra</h1>
-                <i class="bi bi-x-circle close" role="button"></i>
+          </div>
+          <div class="flex-center col-md-4"></div>
+        </div>
+        <!-- Segunda linea -->
+        <div class="row segunda-linea">
+          <div class="categorias flex-center col-md-8"></div>
+          <div class="flex-center col-md-4 iconos-compra">
+            <div class="box-icon-navigator">
+              <a href="index.html" class="btn">
+                <i class="bi bi-house"></i>
+                <p>Inicio</p>
+              </a>
+            </div>
+            <div class="box-icon-navigator">
+              <a href="usuario.html" class="btn">
+                <i class="bi bi-person-circle"></i>
+                <p>Usuario</p>
+              </a>
+            </div>
+
+            <div class="container-carrito">
+              <div class="box-icon-navigator">
+                <a class="btn" id="carrito">
+                  <i class="bi bi-cart3"></i>
+                  <p>Carrito</p>
+                </a>
+                <span
+                  class="position-absolute translate-middle badge rounded-pill bg-danger"
+                >
+                </span>
               </div>
-              <div class="cuerpo-carrito"></div>
-              <div class="footer-carrito">
-                <div class="totales">
-                  <span>Total: </span>
-                  <span id="total"></span>
+
+              <div class="datos-compra">
+                <div class="cabecera-carrito">
+                  <h1>Carrito de compra</h1>
+                  <button class="btn boton close">
+                    <i class="bi bi-x-circle"></i>
+                  </button>
                 </div>
-                <button class="borrar btn">Realizar Pedido</button>
+                <div class="cuerpo-carrito"></div>
+                <div class="footer-carrito">
+                  <div class="totales">
+                    <span>Total: </span>
+                    <span id="total"></span>
+                  </div>
+                  <button class="btn btn-outline-danger">
+                    <a href="./usuario.html"> Realizar Pedido</a>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <!--Fin Columnas -->
-        <!-- Fin container -->
       </div>
     </header>
     <main>
+      <!-- <div class="modal-dialog modal-dialog-centered"></div>
+      <div
+        class="modal fade"
+        id="productModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="productModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="productModalLabel">Producto</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <img id="productImage" src="" alt="Producto" class="img-fluid" />
+            </div>
+          </div>
+        </div>
+      </div> -->
       <div class="overlay"></div>
       <div id="containerCarousel"></div>
-
-      <section class="contenido-principal">
-        <!-- CARDS DE EVENTOS -->
-        <!--         <section id="box-card-principales"></section>
+      <!-- FILTRADO DE PRODUCTOS -->
+      <!--       <section id="box-card-filtrado"></section>
  -->
-        <!-- FILTRADO DE PRODUCTOS -->
-        <section id="box-card-filtrado"></section>
-        <!-- PRODUCTOS -->
-        <section id="container-products">
-          <!-- productos por carrito -->
-          <!-- <div id="carousel-products" class="carousel carousel-dark slice">
-            <div class="carousel-inner"></div>
-            <button
-              class="carousel-control-prev"
-              type="button"
-              data-bs-target="#carousel-products"
-              data-bs-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-              class="carousel-control-next"
-              type="button"
-              data-bs-target="#carousel-products"
-              data-bs-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div> -->
-          <!-- productos normales -->
-          <h1 class="title-importants">
-            Tienda medieval <span>A&J</span> medieval
-          </h1>
-          <div class="row row-cols-1 row-cols-md-5 box-products"></div>
-        </section>
+      <!-- PRODUCTOS -->
+      <section id="container-products">
+        <!-- Cards de productos mas vendidos -->
+        <div class="container-card-filtrada"></div>
+        <div id="container-productos-principales"></div>
       </section>
+
+      <!-- Eventos -->
+      <!-- <section class="marco-eventos">
+        <div class="row">
+          <div class="col-6 eventos">sfs</div>
+          <div class="col-3 eventos">sfs</div>
+          <div class="col-3 eventos">sfs</div>
+        </div>
+      </section> -->
     </main>
-    <footer>
-      <div class="info">
-        <div class="elementos-footer">
+    <footer class="container-fluid">
+      <div class="row">
+        <div class="col-md-4 footer-section">
           <h2>Creador</h2>
-          <div class="creador">
-            <div class="box-icon">
-              <i class="bi bi-c-circle icon"></i>
-              <p>Alex Jonathan Rios Pinto</p>
-            </div>
+          <div class="info">
+            <i class="bi bi-c-circle icon"></i>
+            <p>Alex Jonathan Rios Pinto</p>
           </div>
         </div>
-
-        <div class="container-linea">
-          <div class="vertical-line"></div>
-        </div>
-        <div class="elementos-footer">
+        <div class="col-md-4 footer-section">
           <h2>Contacto</h2>
-          <div class="contacto">
-            <div class="box-icon">
-              <i class="bi bi-telephone icon"></i>
-              <p>tlf: 672629893</p>
-            </div>
+          <div class="info">
+            <i class="bi bi-telephone icon"></i>
+            <p>tlf: 672629893</p>
           </div>
         </div>
-      </div>
+        <div class="col-md-4 footer-section">
+          <h2>Redes</h2>
 
-      <div class="elementos-footer">
-        <h2>Redes</h2>
-        <div class="redes">
-          <div class="box-icon">
+          <div class="info">
             <i class="bi bi-facebook icon"></i>
-          </div>
-          <div class="box-icon">
             <i class="bi bi-instagram icon"></i>
-          </div>
-          <div class="box-icon">
             <i class="bi bi-github icon"></i>
           </div>
         </div>

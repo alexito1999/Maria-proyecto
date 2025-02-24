@@ -1,78 +1,109 @@
-.box-cabecera {
-  background-color: #872341;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  box-shadow: 0 0 0.25rem black;
-}
 #header {
-  position: fixed;
-  z-index: 100;
+  position: sticky;
+  z-index: 200;
   width: 100%;
-  transition: all 0.6s ease-in-out;
-}
-/* Primera parte */
-.box-buscador .container-linea {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem;
-}
-.vertical-line {
-  border-left: 0.1rem solid white; /* Puedes cambiar el color y el grosor de la línea */
-  height: 5rem;
-}
-.box-buscador {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0.25rem var(--primary-color);
 }
 
-.logo {
-  display: flex;
+.box-cabecera .primera-linea {
+  background-color: var(--white-color);
+  border-bottom: 2px solid var(--letters-color);
+  padding: 1rem 1rem;
+}
+.box-cabecera .segunda-linea {
+  background-color: var(--secondary-color);
+}
+
+.categorias {
+  background-color: var(--primary-color);
+  justify-content: space-evenly;
+  color: white;
+  text-transform: capitalize;
+  padding: 0;
+}
+.categorias article {
+  cursor: pointer;
+  margin: 1.5rem 0;
+}
+/* Primera parte */
+
+.container-buscador-ampliado {
+  position: absolute;
+  background-color: var(--white-color);
   justify-content: center;
   align-items: center;
+  z-index: 300;
+  width: 100%;
+  transition: all 0.5s ease-in-out;
+}
+.buscador-ampliado {
+  justify-self: center;
+}
+.logo {
   overflow: hidden;
+  padding: 1rem;
+  filter: brightness(1);
+  transition: filter 0.3s ease-in-out; /* Transición suave */
+}
+.logo:hover {
+  filter: brightness(1.3);
+}
+.logo p {
+  margin-bottom: 0;
+  color: black;
+  font-family: var(--font-family-base);
 }
 .logo img {
   border: 1px solid white;
-  transform: scale(1.1);
-  width: 5.5rem;
+  width: 7.5rem;
 }
-
-.boton-busqueda {
-  width: 3.5rem;
-  font-size: 1.4rem;
+.boton {
+  width: 5rem;
+  padding: 0.5rem;
+  font-size: 2rem;
   transition: all 0.1s ease-in-out;
 }
-.boton-busqueda:hover {
-  transform: scale(1.06);
+.boton:active {
+  border-color: white !important;
 }
-.boton-busqueda:active {
-  transform: translateY(
-    1px
-  ); /* Aumenta el tamaño vertical y se mueve hacia abajo */
+#boton-apertura {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+#boton-apertura:hover {
+  color: var(--white-color);
+  border-color: var(--white-color);
+  background-color: var(--primary-color);
+}
+
+.boton:hover {
+  transform: scale(1.1);
+  border-color: transparent !important;
+}
+
+.boton:active {
+  transform: translateY(1px);
 }
 
 .navbar {
-  padding: 0.2rem;
-  display: block;
-  border-radius: 0.3rem;
-  flex-grow: 1;
-  height: 3.5rem;
-  max-width: 32rem;
+  width: 100%;
 }
 
 .formulario-busqueda {
-  height: 100%;
-  gap: 0.2rem;
+  gap: 0.6rem;
+  flex-grow: 1;
+  padding: 0rem 0.5rem;
+  height: 4.5rem;
 }
 .form-control:focus {
-  box-shadow: 0 0 0.25rem #be3144;
+  box-shadow: 0 0 0.25rem var(--secondary-color);
+  border-color: var(--secondary-color);
 }
 
 .box-input-sugerencias {
   position: relative;
-  width: 100%;
+  flex-grow: 1;
 }
 .box-input-sugerencias input {
   height: 100%;
@@ -86,84 +117,97 @@
   top: 108%;
   padding: 0;
   margin: 0;
-  z-index: 4;
+  z-index: 999;
   border-radius: 4px;
 }
 .lista-sugerencia li {
   cursor: pointer;
-  padding: 0 10px;
+  padding: 1rem 1rem;
 }
 .lista-sugerencia li:hover {
-  background-color: #872341;
+  background-color: var(--letters-color);
   color: white;
+  border-left: 3px solid var(--primary-color);
 }
+
 .lista-sugerencia li:hover i {
   color: white;
 }
-/* .input-search::-webkit-search-cancel-button {
-  appearance: none;
-} */
 
 /* Tercera parte */
+.iconos-compra {
+  justify-content: space-around;
+  padding: 0.1rem 0;
+}
 .box-icon-navigator {
   position: relative;
-  width: 4.5rem;
 }
 .box-icon-navigator .badge {
-  top: -15px;
-  left: 105%;
-  cursor: pointer;
+  top: 18px;
+  cursor: auto;
+  transition: font-size 0.1s ease-in-out;
+}
+.box-icon-navigator .maxActive {
+  font-size: 1.5rem !important;
 }
 .box-icon-navigator a {
   font-weight: 500;
   color: white;
-  position: absolute;
-  top: -3rem;
-  padding: 0;
   transition: transform 0.07s ease-in-out;
 }
-
 .box-icon-navigator a i {
-  font-size: 3rem;
+  font-size: 2.4rem;
 }
-
+.box-icon-navigator a {
+  border: none;
+  color: var(--white-color);
+}
 .box-icon-navigator a p {
   letter-spacing: 1px;
 }
 .box-icon-navigator a:hover {
-  color: white;
   transform: scaleX(1.1);
 }
 
 .datos-compra {
-  position: absolute;
+  position: fixed;
   display: flex;
   background-color: white;
   color: black;
   top: 0;
-  right: -35rem;
+  right: 0;
   z-index: 1000;
   height: 100vh;
-  width: 35rem;
+  flex-basis: 30rem;
 
-  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  display: none;
   flex-direction: column;
-  box-shadow: 0rem 0 3rem rgba(0, 0, 0, 0.4);
+  padding: 1rem 2rem;
+  box-shadow: 0rem 0 4rem;
+}
+/* @media screen and (max-width: 700px) {
+  .datos-compra {
+    width: 60%; 
+  }
+} */
+.datos-compra.visible {
+  right: 0; /* Muestra el panel moviéndolo a la vista */
 }
 
-.datos-compra .cuerpo-carrito,
-.footer-carrito {
-  padding: 1rem 2.5rem;
+.cuerpo-carrito {
   border-top: 2px solid grey;
+  border-bottom: 2px solid grey;
 }
-
 .datos-compra .cabecera-carrito {
   display: flex;
+  padding: 1.5rem 0;
   align-items: center;
-  padding: 0 1rem;
-  text-align: end;
-  background-color: #872341;
-  color: white;
+  justify-content: space-between;
+  text-align: center;
+  color: var(--primary-color);
+}
+.datos-compra .cabecera-carrito h1 {
+  font-size: 3rem;
 }
 .datos-compra .cabecera-carrito span {
   font-size: 2rem;
@@ -194,13 +238,12 @@
 }
 
 .close {
-  font-size: 2.3rem;
-  display: inline-block;
-  transition: transform 1.5s ease-in-out;
+  font-size: 3rem;
+  color: var(--primary-color);
 }
 
 .close:hover {
-  animation: spin 1.5s infinite;
+  animation: spin 1.2s infinite;
 }
 .line button {
   background-color: #ffdd40;
@@ -222,25 +265,27 @@
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
 }
 .footer-carrito .totales {
   padding: 2rem 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border-bottom: 2px solid grey;
 }
 .footer-carrito .totales span:first-child {
   font-weight: 600;
 }
 .footer-carrito button {
-  background-color: #872341;
+  background-color: var(--secondary-color);
   height: 4rem;
   color: white;
   width: 15rem;
   display: none;
   margin: 0 0 2rem 0;
+}
+.footer-carrito button a {
+  text-decoration: none;
+  color: white;
 }
 
 @keyframes spin {

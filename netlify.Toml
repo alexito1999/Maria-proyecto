@@ -1,0 +1,6 @@
+[build]
+  publish = "src" # Cambia esto si tu directorio de publicación es diferente
+  command = ""    # Deja esto vacío si no necesitas un comando de construcción
+
+[functions]
+  directory = "netlify/functions"

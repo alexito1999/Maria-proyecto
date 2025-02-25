@@ -124,13 +124,10 @@ async function creacionCategorias(container) {
     items += `            
     <article class="title-importants categoria" data-id="${categories.id}">${categories.nombre}</article>
     `;
-
-
   })
   $(container).html(items);
   $('.categoria').click(function () {
     const categoriaId = $(this).data('id')
-
     filtrarProductosPorCategoria(categoriaId);
   })
 }

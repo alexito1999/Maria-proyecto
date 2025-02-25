@@ -5,7 +5,6 @@
       "precio": 100,
       "categoria": 1,
       "tipo": "arma",
-
       "descripcion": "Una espada medieval de acero forjado con una hoja de 60 cm de largo.",
       "imagen": "images/productos/espadamedi-1.webp",
       "imagenSecundaria": "images/productos/espadamedi-2.webp"

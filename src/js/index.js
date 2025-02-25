@@ -172,7 +172,7 @@ async function crearCarrusel(container, id) {
            alt=""
          />
          <div class="carousel-caption d-none  d-md-block">
-           <h2 class="title-importants title-observer">${item.captionTitulo}</h2 >
+           <h2 class="title-importants ">${item.captionTitulo}</h2 >
            <p>
              ${item.captionTexto}
            </p>

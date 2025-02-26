@@ -99,7 +99,7 @@
               </a>
             </div>
             <div class="box-icon-navigator">
-              <a href="usuario.html" class="btn">
+              <a href="./login.html" class="btn">
                 <i class="bi bi-person-circle"></i>
                 <p>Usuario</p>
               </a>
@@ -130,9 +130,11 @@
                     <span>Total: </span>
                     <span id="total"></span>
                   </div>
-                  <button class="btn btn-outline-danger">
-                    <a href="./usuario.html"> Realizar Pedido</a>
-                  </button>
+                  <a href="./login.html"
+                    ><button class="btn btn-outline-danger">
+                      Realizar Pedido
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -141,44 +143,13 @@
       </div>
     </header>
     <main>
-      <!-- <div class="modal-dialog modal-dialog-centered"></div>
-      <div
-        class="modal fade"
-        id="productModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="productModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="productModalLabel">Producto</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <img id="productImage" src="" alt="Producto" class="img-fluid" />
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="overlay"></div>
       <div id="containerCarousel"></div>
-      <!-- FILTRADO DE PRODUCTOS -->
-      <!--       <section id="box-card-filtrado"></section>
- -->
       <!-- PRODUCTOS -->
       <section id="container-products">
         <!-- Cards de productos mas vendidos -->
         <div class="container-card-filtrada"></div>
-        <div id="container-productos-principales"></div>
+        <div id="container-productos-principales" class="container-fluid"></div>
       </section>
 
       <!-- Eventos -->

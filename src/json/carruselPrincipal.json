@@ -2,13 +2,13 @@
     {
       "id": 1,
       "imagen": "images/carruselPrincipal/atuendo.jpg",
-      "captionTitulo": "titulo q pondre mas tarde.",
-      "captionTexto": "Cosas q pondre mas tarde."
+      "captionTitulo": "El fervor de las cruzadas.",
+      "captionTexto": "Traemos pequeños recuerdos de tiempos pasados a nuestra época."
     },
     {
       "id": 2,
       "imagen": "images/carruselPrincipal/caballero-fondo.jpg",
-      "captionTitulo": "titulo q pondre mas tarde.",
-      "captionTexto": "Caballero sin caballo hace camino al andar."
+      "captionTitulo": "Atuendos y ropas.",
+      "captionTexto": "No importa donde estes te podrás informar de nuestros productos y precios."
     }
   ]

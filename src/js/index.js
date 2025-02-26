@@ -1,9 +1,14 @@
 import Carrito from './Carrito.js';
 import Producto from './Producto.js'
+/* import { Input, Tab, Ripple, initMDB } from "mdb-ui-kit";
+ */
 $(document).ready(() => init());
-
+let elementosPorPagina = 8
+let totalProductos = 0
+let paginaActual = 1
 
 function init() {
+
   añadirAlCarrito(); // Ahora que los productos están en el DOM, activamos el evento
   FormularioRegistro();
   ConstructorDesplegableCarrito();
@@ -21,8 +26,10 @@ function init() {
   mostrarDatosProductos("#container-productos-principales");
   buscador()
   intersectionTitles()
+  // Initialization for ES Users
 
-
+  /*   initMDB({ Input, Tab, Ripple });
+   */
 }
 
 /* Datos */
@@ -170,6 +177,7 @@ async function crearCarrusel(container, id) {
            src="${item.imagen}"
            class="d-block w-100"
            alt=""
+           loading="lazy"
          />
          <div class="carousel-caption d-none  d-md-block">
            <h2 class="title-importants ">${item.captionTitulo}</h2 >
@@ -257,19 +265,16 @@ function mostrarProductosCarrusel(json) {
 }
 
 function crearCardModeloProducto(data) {
-  /*   let origin = window.location.origin
-    let urlProductos = origin + '/productos.html'
-    console.log("nueva uri: ", urlProductos) */
   let newElem = '';
   newElem += `
       <article class="product"  data-id="${data.id}">
-          <div class="card btn " >
+          <div class="card btn  ${data.imagenSecundaria ? 'has-second-image' : ''}" >
             <div class="imagen " >
-              <img class="imagen1" data-image="${data.imagen}" src="${data.imagen}"  alt="...">
-              <img class="imagen2" data-image="${data.imagenSecundaria}" src="${data.imagenSecundaria}"  alt="...">
+              <img class="imagen1" data-image="${data.imagen}" src="${data.imagen}"  alt="..." loading="lazy">
+              ${data.imagenSecundaria ? `<img class="imagen2" data-image="${data.imagenSecundaria}" src="${data.imagenSecundaria}"  alt="..." loading="lazy">` : ''}
             </div>
             <div class="card-body">
-              <h5 class="card-title">${data.nombre}</h5>
+              <h4 class="card-title">${data.nombre}</h4>
               <p class="card-descripcion"><b>Descripcion: </b> ${data.descripcion}.</p>
             </div>
             <div class="card-footer">
@@ -286,27 +291,113 @@ function crearCardModeloProducto(data) {
 
 
 async function mostrarDatosProductos(container) {
-  /* Variables */
+  /* Obtengo los datos*/
   const data = await cargarProductos()
+  /* Asigno la cantidad de productos de mi array de productos */
+  //De momento todos los productos estan en el mismo json
+  totalProductos = data.length
 
+  /* Con esta funcion lo q hago es hacer una copia del array data q voy a iterar 
+  ya cortado para q renderice los productos q quiero enseñar */
+  const rebanadaDatos = obtenerRebanadaDeBaseDeDatos(paginaActual, data)
+
+  /* Vacio el contenedor para evitar q en cada renderizado se queden productos q no quiero */
+  $(container).empty();
+
+  /* Renderizo el Componente del titulo */
+  titulo_mostrarDatosProductos(container)
+
+  /* Creo un nuevo  contenedor con solo productos*/
+  let containerContenido = $('<div id="box-products" class="row"></div>');
+
+  /* Bucle constructor productos*/
+  $.each(rebanadaDatos, (index, elem) => {
+    const newElem = crearCardModeloProducto(elem)
+    $(containerContenido).append(newElem);
+  });
+
+  /* Añado el contenedor creado al ya existente*/
+  $(container).append(containerContenido);
+
+  /*Renderizo el Componente del indice*/
+  elementosPaginacion_mostrarDatosProductos(container)
+
+  /* Controla q los botones se desabiliten cuando toque */
+  controlarBotones()
+
+  /* Funcion para observar el titulo y decorarlo */
+  intersectionTitles()
+}
+function obtenerRebanadaDeBaseDeDatos(pagina = 1, data) {
+  const corteDeInicio = (paginaActual - 1) * elementosPorPagina;
+  const corteDeFinal = corteDeInicio + elementosPorPagina;
+  return data.slice(corteDeInicio, corteDeFinal);
+}
+function retrocederBoton() {
+  let message = 'Estas fuera de los rangos permitidos de los productos'
+  if (paginaActual > 1) {
+    paginaActual = paginaActual - 1;
+    // Redibujar
+    mostrarDatosProductos("#container-productos-principales")
+  } else {
+    mostrarPopover(this, message)
+  }
+
+}
+function adelantarBoton() {
+  let message = 'Estas fuera de los rangos permitidos de los productos'
+
+  if (paginaActual < calcularPaginasTotales()) {
+    console.log('pagina actual:', paginaActual)
+    console.log('pagina total:', calcularPaginasTotales())
+    paginaActual = paginaActual + 1;
+    // Redibujar
+    mostrarDatosProductos("#container-productos-principales")
+  } else {
+    mostrarPopover(this, message)
+  }
+}
+function calcularPaginasTotales() {
+  return Math.ceil(totalProductos / elementosPorPagina)
+}
+
+function controlarBotones() {
+
+  if (paginaActual === 1) {
+    $('#paginarAtras').attr('disabled', true)
+  } else {
+    $('#paginarAtras').removeAttr('disabled')
+  }
+
+  if (paginaActual === calcularPaginasTotales()) {
+    $('#paginarAdelante').attr('disabled', true)
+  } else {
+    $('#paginarAdelante').removeAttr('disabled')
+  }
+}
+
+function titulo_mostrarDatosProductos(container) {
   let titulo = ''
   titulo = ` <h1 class="title-importants title-observer">
           Tienda  <span>A&J</span> medieval
         </h1>`
-
+  /* Lo añado al contenedor principal  */
   $(container).append(titulo);
+}
 
-  let containerInterno = $('<div id="box-products" class="row"></div>');
-  /* Bucle constructor */
-  $.each(data, (index, elem) => {
-    const newElem = crearCardModeloProducto(elem)
-
-    $(containerInterno).append(newElem);
-
-  });
-  $(container).append(containerInterno);
-  intersectionTitles()
-
+function elementosPaginacion_mostrarDatosProductos(container) {
+  let containerElementosPaginacion = $(`<div class=" containerElementosPaginacion"></div>`)
+  let elementosPaginacion = ''
+  elementosPaginacion = `
+  <button id="paginarAtras" class="btn boton"><i class="bi bi-caret-left"></i></button>
+  <span>${paginaActual}/${calcularPaginasTotales()}</span>
+  <button id="paginarAdelante" class="btn boton"><i class="bi bi-caret-right"></i></button>
+  `
+  $(containerElementosPaginacion).append(elementosPaginacion);
+  /* Lo añado al contenedor principal  */
+  $(container).append(containerElementosPaginacion);
+  $('#paginarAtras').click(retrocederBoton)
+  $('#paginarAdelante').click(adelantarBoton)
 }
 /* function eventoProducto() {
   const product = $('.product')
@@ -344,23 +435,29 @@ function MostrarCuadroSugerencias(data) {
   /* Variables */
   let inputBuscador = $("#input-search");
   let listaSugerencias = $(".lista-sugerencia");
-
   /* Al teclear en el input*/
+
   inputBuscador.keyup(function () {
     let busquedaCoincidente = $(this).val().toLowerCase();
     let count = 0;
 
-    $.each(data, function (index, elem) {
-      let nombre = elem.nombre.toLowerCase();
-      if (nombre.includes(busquedaCoincidente) && count < 5) {
-        let newElem = $(`
-          <li class="lista"><i class='bi bi-chevron-right'></i>
-          ${elem.nombre}
-          </li>`);
-        listaSugerencias.append(newElem);
-        count++;
-      }
-    });
+    console.log(busquedaCoincidente)
+    listaSugerencias.empty()
+
+    if (busquedaCoincidente !== '') {
+      $.each(data, function (index, elem) {
+        let nombre = elem.nombre.toLowerCase();
+        if (nombre.includes(busquedaCoincidente) && count < 5) {
+          let newElem = $(`
+            <li class="lista"><div><img src='${elem.imagen}'></div> 
+            <div ><i class='bi bi-chevron-right'> </i> ${elem.nombre}</div> 
+            </li>`);
+          listaSugerencias.append(newElem);
+          count++;
+        }
+
+      });
+    }
   });
 
   /* Al hacer click en la sugerencia */

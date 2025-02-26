@@ -4,9 +4,9 @@
   --third-color: #be3144;
   --titles-color: #04bd7d;
   --white-color: #ffff;
+  --gray-light-color: #f8f8f8;
   --letters-color: #c0c0c0;
   --font-family-base: "sans-serif, Arial, Helvetic";
   --font-family-secondary: " Arial, Helvetic";
-
-  --font-size-base: 16px;
+  --font-size-products: 1rem;
 }

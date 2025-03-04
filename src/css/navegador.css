@@ -12,7 +12,7 @@
   padding: 1rem 1rem;
 }
 .box-cabecera .segunda-linea {
-  background-color: var(--secondary-color);
+  background-color: var(--white-color);
 }
 
 .categorias {
@@ -22,11 +22,20 @@
   text-transform: capitalize;
   padding: 0;
 }
+.categorias article:hover {
+  transform: scale(1.05);
+}
 .categorias article {
+  transition: all 0.07s ease-in;
   cursor: pointer;
   margin: 1.5rem 0;
 }
 /* Primera parte */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+}
 
 .container-buscador-ampliado {
   position: fixed;
@@ -40,7 +49,11 @@
 .buscador-ampliado {
   justify-self: center;
 }
+.grid-item {
+  text-align: center;
+}
 .logo {
+  grid-column: 2/3;
   overflow: hidden;
   padding: 1rem;
   filter: brightness(1);
@@ -70,6 +83,7 @@
 #boton-apertura {
   color: var(--primary-color);
   border-color: var(--primary-color);
+  justify-self: start;
 }
 #boton-apertura:hover {
   color: var(--white-color);
@@ -96,7 +110,7 @@
   padding: 0rem 0.5rem;
   height: 4.5rem;
 }
-.form-control:focus {
+#input-search:focus {
   box-shadow: 0 0 0.25rem var(--secondary-color);
   border-color: var(--secondary-color);
 }
@@ -111,7 +125,7 @@
 
 .lista-sugerencia {
   position: absolute;
-  background-color: white;
+  background-color: var(--white-color);
   list-style-type: none;
   width: 100%;
   top: 108%;
@@ -119,6 +133,11 @@
   margin: 0;
   z-index: 999;
   border-radius: 4px;
+  overflow-y: auto;
+  max-height: 25rem;
+}
+.lista-sugerencia::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
 }
 .lista-sugerencia li {
   cursor: pointer;
@@ -128,17 +147,22 @@
 }
 .lista-sugerencia li div:first-child {
   align-self: center;
-  flex-basis: 12rem;
+  width: 30%;
+  height: 10rem;
 }
 .lista-sugerencia li div:nth-child(2) {
   align-self: center;
   flex-grow: 1;
+  width: 70%;
+  b {
+    margin-left: 2rem;
+  }
 }
 
 .lista-sugerencia li:hover {
   background-color: var(--letters-color);
   color: white;
-  border-left: 3px solid var(--primary-color);
+  border-left: 4px solid var(--primary-color);
 }
 
 .lista-sugerencia li:hover i {
@@ -170,7 +194,7 @@
 }
 .box-icon-navigator a {
   border: none;
-  color: var(--white-color);
+  color: var(--primary-color);
 }
 .box-icon-navigator a p {
   letter-spacing: 1px;
@@ -187,7 +211,7 @@
   top: 0;
   right: 0;
   z-index: 1000;
-  height: 100vh;
+  height: 100%;
   flex-basis: 30rem;
   display: none;
   flex-direction: column;

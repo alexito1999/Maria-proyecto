@@ -34,8 +34,6 @@
     <!-- ARCHIVOS PROPIOS -->
     <script type="module" src="./js/index.js"></script>
     <link rel="stylesheet" href="./css/style.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
   </head>
 
   <body>
@@ -53,6 +51,7 @@
                   type="search"
                   placeholder="BUSCAR"
                   aria-label="Search"
+                  data-bs-toggle="popover"
                 />
                 <ul class="lista-sugerencia"></ul>
               </div>
@@ -73,20 +72,25 @@
       <div class="container-fluid box-cabecera">
         <!-- Primera linea -->
         <div class="row primera-linea">
-          <div class="flex-center col-6 col-md-4">
-            <button id="boton-apertura" class="btn boton" type="submit">
-              <i class="bi bi-search"></i>
-            </button>
-          </div>
-          <div class="flex-center col-6 col-md-4">
-            <div class="logo center">
+          <div class="grid-container col-12">
+            <div class="grid-item">
+              <button id="boton-apertura" class="btn boton" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+
+            <div class="logo center grid-item">
               <a href="index.html"
                 ><img src="./images/logo2.png" class="rounded-circle" alt="" />
                 <p>A&J medieval</p>
               </a>
             </div>
+            <div class="col-auto"></div>
           </div>
-          <div class="flex-center col-md-4"></div>
+          <!-- <div class="flex-center col-6 col-md-4">
+            
+          </div>
+          <div class="flex-center col-md-4"></div> -->
         </div>
         <!-- Segunda linea -->
         <div class="row segunda-linea">
@@ -101,7 +105,7 @@
             <div class="box-icon-navigator">
               <a href="./login.html" class="btn">
                 <i class="bi bi-person-circle"></i>
-                <p>Usuario</p>
+                <p>Registro</p>
               </a>
             </div>
 

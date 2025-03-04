@@ -15,9 +15,9 @@ body {
   font-size: 1.6rem;
   overflow-x: hidden; /* Evita el desplazamiento horizontal */
 }
-main {
+/* main {
   min-height: 100dvh;
-}
+} */
 section {
   padding: 4rem 1rem;
 }
@@ -124,3 +124,16 @@ img {
   overflow: hidden;
   white-space: nowrap;
 } */
+.popover i {
+  color: #ff8c00;
+  font-size: var(--font-size-buttons-bigger);
+  margin-right: 1rem;
+}
+
+.popover-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: var(--font-size-buttons-bigger);
+  font-size: var(--font-size-normal);
+}

@@ -4,7 +4,11 @@
 #desplegable .accordion {
   width: 100%;
 }
-
+#container-productos-principales {
+  padding: 2rem 0 0 0;
+  border: 1px solid var(--letters-color);
+  position: relative;
+}
 .carousel-caption {
   position: absolute;
   right: 50%;
@@ -133,7 +137,7 @@
   background-color: var(--white-color);
   flex-direction: row;
   padding: 2rem;
-  border: 1px solid var(--letters-color);
+  border-top: 1px solid var(--letters-color);
   button {
     background-color: var(--primary-color);
     border-radius: unset;

@@ -1,5 +1,8 @@
 import Carrito from './Carrito.js';
 import Producto from './Producto.js'
+import { mostrarPopover } from './componentes.js'
+import { inicializarPopovers } from './componentes.js'
+
 /* import { Input, Tab, Ripple, initMDB } from "mdb-ui-kit";
  */
 $(document).ready(() => init());
@@ -10,7 +13,6 @@ let paginaActual = 1
 function init() {
 
   añadirAlCarrito(); // Ahora que los productos están en el DOM, activamos el evento
-  FormularioRegistro();
   ConstructorDesplegableCarrito();
   animacionCabecera()
   inicializarPopovers()
@@ -78,26 +80,8 @@ async function obtenerProductosPorCategoria(categoriaId) {
 
 /* Funciones */
 
-function inicializarPopovers() {
-  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-}
-function mostrarPopover(element, message) {
-  $(element).popover({
-    content: message,
-    placement: "bottom",
-    trigger: "manual" // Controlar la apertura y cierre manualmente
-  });
-  $(element).popover('show');
-  setTimeout(function () {
-    $(element).popover('hide');
-  }, 2000);
-  console.log("pulsado")
-  // Opcional: eliminar el popover completamente después de ocultarlo
-  $(element).on('hidden.bs.popover', function () {
-    $(this).popover('dispose');
-  });
-}
+
+
 function animacionCabecera() {
   let lastScrollTop = 0;
   const header = document.querySelector('#header');
@@ -336,6 +320,7 @@ function obtenerRebanadaDeBaseDeDatos(pagina = 1, data) {
 function retrocederBoton() {
   let message = 'Estas fuera de los rangos permitidos de los productos'
   if (paginaActual > 1) {
+
     paginaActual = paginaActual - 1;
     // Redibujar
     mostrarDatosProductos("#container-productos-principales")
@@ -348,8 +333,8 @@ function adelantarBoton() {
   let message = 'Estas fuera de los rangos permitidos de los productos'
 
   if (paginaActual < calcularPaginasTotales()) {
-    console.log('pagina actual:', paginaActual)
-    console.log('pagina total:', calcularPaginasTotales())
+    // Hacer scroll hasta la nueva card
+
     paginaActual = paginaActual + 1;
     // Redibujar
     mostrarDatosProductos("#container-productos-principales")
@@ -398,6 +383,12 @@ function elementosPaginacion_mostrarDatosProductos(container) {
   $(container).append(containerElementosPaginacion);
   $('#paginarAtras').click(retrocederBoton)
   $('#paginarAdelante').click(adelantarBoton)
+  if ($("#container-productos-principales").length) {
+    $('html, body').animate({
+      scrollTop: $("#container-productos-principales").offset().top - 120
+    })
+  }
+
 }
 /* function eventoProducto() {
   const product = $('.product')
@@ -450,7 +441,7 @@ function MostrarCuadroSugerencias(data) {
         if (nombre.includes(busquedaCoincidente) && count < 5) {
           let newElem = $(`
             <li class="lista"><div><img src='${elem.imagen}'></div> 
-            <div ><i class='bi bi-chevron-right'> </i> ${elem.nombre}</div> 
+            <div ><i class='bi bi-chevron-right'> </i> <span class="producto-buscado">${elem.nombre}</span> <b>${elem.precio} €</b></div> 
             </li>`);
           listaSugerencias.append(newElem);
           count++;
@@ -462,7 +453,7 @@ function MostrarCuadroSugerencias(data) {
 
   /* Al hacer click en la sugerencia */
   listaSugerencias.on("click", ".lista", function () {
-    let nombre = $(this).text().trim();
+    let nombre = $(this).find('.producto-buscado').text().trim();
     console.log(nombre);
     inputBuscador.val(nombre);
     listaSugerencias.empty();
@@ -507,18 +498,11 @@ function buscador() {
   $('.container-buscador-ampliado').click(function () {
     console.log('click emerrngente')
   })
-  inputBuscador.blur(function (event) {
-    event.stopPropagation(); // Evitar el cierre inmediato del overlay
-    $(".overlay").removeClass("visible");
-  })
-  /* Al borrar el input usando el botón de cancelar del navegador */
-  /*   inputBuscador.on('input', function () {
-      if ($(this).val() === '') {
-        listaSugerencias.empty();
-      }
-    }); */
-
-
+  /*   inputBuscador.blur(function (event) {
+      event.stopPropagation(); // Evitar el cierre inmediato del overlay
+      $(".overlay").removeClass("visible");
+    })
+   */
 }
 async function buscarProductos(containerfiltrada) {
   /* Variables */
@@ -566,7 +550,12 @@ async function buscarProductos(containerfiltrada) {
         $('html, body').animate({
           scrollTop: $("#container-products").offset().top - 50
         })
-
+        /* Capa blur */
+        $(".overlay").removeClass("visible");
+        /* Buscador se oculta */
+        $(".container-buscador-ampliado").addClass("invisible");
+        /* se oculta todo lo q no sea el producto buscado */
+        $('#container-productos-principales').css('visibility', 'hidden')
         // Eliminar card al hacer clic en el botón
         $(".container-card-filtrada .close").click(function () {
           $(".container-card-filtrada").fadeToggle();
@@ -576,6 +565,8 @@ async function buscarProductos(containerfiltrada) {
       else {
         console.log("Producto no encontrado");
         mostrarPopover(this, "Producto no encontrado")
+
+        $(".lista-sugerencia").empty()
       }
     }
   });
@@ -587,38 +578,42 @@ async function añadirAlCarrito() {
   const data = await cargarProductos()
   //container-products
 
-  $("#container-productos-principales").on("click", ".product .buy-button", function () {
+  $("#container-productos-principales").on("click", ".product ", function () {
     /* Encontrar el div producto mas cercano */
-
-    const cardProducto = $(this).closest('.product');
-    console.log(cardProducto)
-    const idcardProducto = cardProducto.data("id");
-    console.log("id producto", idcardProducto)
-    const detallesProducto = data.find((item) => {
-      return item.id === idcardProducto
-    })
-
-    if (detallesProducto) {
-      /* variables de los datos del producto */
-
-      const { nombre, descripcion, precio } = detallesProducto
-
-      /* Agregar producto al carrito */
-      const producto = new Producto(idcardProducto, nombre, descripcion, precio);
-      carrito.añadirProducto(producto);
-      /* Muestro en consola los productos */
-      console.log('carrito: ', carrito);
-      actualizarCarrito()
-      actualizarBadge(detallesProducto)
-
-
-    } else {
-      console.log("error no se encontro el producto")
-    }
-
+    procesarProducto($(this), data)
+  });
+  $(".container-card-filtrada").on("click", ".product ", function () {
+    /* Encontrar el div producto mas cercano */
+    procesarProducto($(this), data)
   });
 }
+function procesarProducto(elemento, data) {
+  const cardProducto = elemento.closest('.product');
+  console.log(cardProducto)
+  const idcardProducto = cardProducto.data("id");
+  console.log("id producto", idcardProducto)
+  const detallesProducto = data.find((item) => {
+    return item.id === idcardProducto
+  })
 
+  if (detallesProducto) {
+    /* variables de los datos del producto */
+
+    const { nombre, descripcion, precio } = detallesProducto
+
+    /* Agregar producto al carrito */
+    const producto = new Producto(idcardProducto, nombre, descripcion, precio);
+    carrito.añadirProducto(producto);
+    /* Muestro en consola los productos */
+    console.log('carrito: ', carrito);
+    actualizarCarrito()
+    actualizarBadge(detallesProducto)
+
+
+  } else {
+    console.log("error no se encontro el producto")
+  }
+}
 
 function actualizarCarrito() {
 
@@ -705,113 +700,3 @@ function actualizarBadge(detallesProducto) {
     }, 150);
   }
 }
-
-
-/* Base de datos de clientes */
-let userData = {
-  cliente: [],
-};
-
-function FormularioRegistro() {
-  /* Formulario de registro */
-  $(".formulario-registro").submit(function (event) {
-    event.preventDefault();
-
-    let cliente = {};
-    if (!validarFormulario()) {
-      // Detener la ejecución si la validación no pasa
-      return;
-    }
-    /* Datos del usuario al array */
-    cliente.nombreUsuario = $("#InputNombre").val();
-    cliente.password = $("#InputPassword1").val();
-    cliente.email = $("#InputEmail1").val();
-    console.log("cliente:", cliente);
-    userData.cliente.push(cliente);
-    console.log("Usuarios:", userData);
-
-    // Imprimir los datos en la consola
-    console.log("Nombre de usuario:", cliente.nombreUsuario);
-    console.log("Email:", cliente.email);
-    console.log("Contraseña:", cliente.password);
-
-    // Aquí puedes enviar el formulario o realizar alguna acción adicional
-    alert(
-      "\nMensaje informativo\n Estos son tus datos \n" +
-      "\n*Usuario: " +
-      cliente.nombreUsuario +
-      "\n*Email: " +
-      cliente.email +
-      "\n*Contraseña: " +
-      cliente.password
-    );
-
-    /* Restablecer datos */
-    $("#InputNombre").val("");
-    $("#InputPassword1").val("");
-    $("#InputPassword2").val("");
-    $("#InputEmail1").val("");
-
-
-  });
-}
-
-function validarFormulario() {
-  /* Variables de los campos */
-  const nombreUsuario = $("#InputNombre").val();
-  const password = $("#InputPassword1").val();
-  const password1 = $("#InputPassword2").val();
-  const email = $("#InputEmail1").val();
-
-  /* Validaciones */
-  if (nombreUsuario.length < 4) {
-    alert("El nombre de usuario debe tener al menos 4 caracteres");
-    return false;
-  }
-
-  if (!validarEmail(email)) {
-    return false;
-  }
-
-  if (password.length < 4) {
-    alert("La contraseña debe tener al menos 4 caracteres, es muy insegura");
-    return false;
-  }
-
-  if (password !== password1) {
-    alert("Las contraseñas no coinciden");
-    return false;
-  }
-
-  /* Verificaciones de nombre y correo existentes */
-  const usuarioExistente = userData.cliente.find(
-    (cliente) => cliente.nombreUsuario === nombreUsuario
-  );
-  if (usuarioExistente) {
-    alert("El nombre de usuario ya está en uso");
-    return false;
-  }
-
-  const emailExistente = userData.cliente.find(
-    (cliente) => cliente.email === email
-  );
-  if (emailExistente) {
-    alert("El correo electrónico ya está en uso");
-    return false;
-  }
-  /* Si esta todo correcto devuelve true y continua */
-  return true;
-}
-function validarEmail(email) {
-  // Expresión regular para validar el formato del correo electrónico
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  // Validar el formato del correo electrónico
-  if (!regex.test(email)) {
-    alert("El correo electrónico no es válido");
-    return false; // El correo electrónico es válido
-  }
-  return true; // El correo electrónico es válido
-}
-
-

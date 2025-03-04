@@ -9,4 +9,7 @@
   --font-family-base: "sans-serif, Arial, Helvetic";
   --font-family-secondary: " Arial, Helvetic";
   --font-size-products: 1rem;
+  --font-size-normal: 1.2rem;
+  --font-size-buttons: 2rem;
+  --font-size-buttons-bigger: 2.5rem;
 }
